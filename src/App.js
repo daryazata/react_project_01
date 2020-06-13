@@ -1,52 +1,76 @@
 import React, { Component } from 'react';
 import Person from './Person/Person'
 
+
 //function App()
 class App extends Component
 {
 state ={  //  state is a JS Object that, its used to manage component internal data
 
   persons:[
-      {name:"Marini", age:"30"},
-      {name:"Dash", age:"31"}, 
-      {name:"Serg", age:"36"}
+      {id:"sdkjf",name:"Marini", age:"30"},
+      {id:"sdkjfk",name:"Dash", age:"31"}, 
+      {id:"skown",name:"Serg", age:"36"}
   ]
   ,
   otherState: "some other state",
   showPerson: false
   }
-  switchNameHandler= (newName)=>  {
-   // DONT DO THIS this.state.persons[0].name="Marina"
-   this.setState  
-   ({   
-    persons:[
-      {name: newName, age:"37"},
-      {name:"Dash", age:"30"}, 
-      {name:"Serg", age:"40"}
-  ]
-   })
-}
 
-nameChangedHandler = (event) =>{
-  this.setState({
+
+  deletePersonHandler = (personIndex) => {
+
+    //const persons = this.state.persons.slice() 
+    //create a copy of an array, dont change the original array
+    const persons = [...this.state.persons]  //spread operator => aquivalent to slice() , more modern feature from JS ES6
+    persons.splice(personIndex,1)
+    this.setState(
+      {persons : persons}
+    )
+
+  }
+
+nameChangedHandler = (event, id) =>{
+
+  const personIndex = this.state.persons.findIndex(p =>{
+    return p.id === id
+  })
+
+  const person ={    //shouldnt mutate the original array, instead copy it to a new array -> spread operator
+    ...this.state.persons[personIndex]  // here one object is updated with {}
+   }     
+
+   //alternative
+  // const person = Object.assign({}, this.state.persons[personIndex])
+
+  //updating name in the copied array, creating new coppy og whole array and update it
+  person.name = event.target.value
+  const persons = [...this.state.persons] // here spread operator with [], not {} because persons is an array (of object) , before one object was updated
+  persons[personIndex] =  person
+
+  this.setState(
+  {  persons: persons}
+  )
+
+
+
+/*   this.setState({
     persons:[
    {name: "Max", age:"37"},
       {name: event.target.value, age:"30"}, 
       {name:"Serg", age:"40"}
   ]
   }
-  )
+  ) */
 }
 
 tooglePersonHandler= () => {
 
-  console.log(this.state.showPerson)
   const togglePerson =this.state.showPerson
   this.setState({
     showPerson: !togglePerson
 
   })
-
 }
 
 // state changes lead to DOM updating / rerendering 
@@ -66,7 +90,22 @@ render(){ //if func no render
 
   if(this.state.showPerson){
 
-   
+   persons = (
+
+    this.state.persons.map((person , index)=>{
+
+      return(
+        <Person 
+        key={person.id} 
+        click={() => {this.deletePersonHandler(index)} } 
+        name={person.name} 
+        age={person.age}
+        changed={(event)=>{this.nameChangedHandler(event, person.id)}}
+        />
+      )
+    })
+
+   )
   }
 
 
@@ -79,28 +118,10 @@ render(){ //if func no render
         in that wy we use the reference  */}
         {/* <button style={style} onClick={ ()=>  this.switchNameHandler("DaryA")}>Switch name</button>  */} {/* this can be unefficient, if overusing! use bind */}
 
-        <button style={style} onClick={this.tooglePersonHandler}>Switch</button>
+        <button style={style} onClick={this.tooglePersonHandler}>Toggle Persons</button>
         {/* replce this.state with personsState in func*/}
 
-     {  
-       this.state.showPerson===true?
-       <div>
-       <Person 
-          name ={this.state.persons[0].name} 
-          age = {this.state.persons[0].age}
-          click = {this.switchNameHandler.bind(this, "Darya!")}
-          > My hobby is dancing </Person>
-         <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age}
-          changed={this.nameChangedHandler}
-          />
-         <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age}
-          />
-          </div> : null
-       }
+     {persons}
          
     
     </div>
