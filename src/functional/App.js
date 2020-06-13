@@ -1,40 +1,49 @@
-import React, { Component } from 'react';
+
+// this is the App.js written in a funcitonal component way
+
+//import React, { Component } from 'react';
+import React, { useState } from 'react'; // hook 
+
+import logo from './logo.svg';
+import './App.css';
 
 import Person from './Person/Person'
 
 //function App()
-class App extends Component
+//class App extends Component
+const App = props =>  //functional component
 {
-state ={  //  state is a JS Object that, its used to manage component internal data
 
-  persons:[
+  const [personsState, setPersonState] = useState({
+
+    persons:[   // = personsState
 
       {name:"Marini", age:"30"},
       {name:"Dash", age:"31"}, 
       {name:"Serg", age:"36"}
 
   ]
-
   ,
   otherState: "some other state"
 
-  }
+  })
 
+  useState({otherState:"huhu"})
 
+  console.log(personsState)
 
-
-  switchNameHandler= (newName)=>  {
+  const switchNameHandler= ()=>  {
 
     // console.log('Was clicked!')
    // DONT DO THIS this.state.persons[0].name="Marina"
    
-   this.setState  
-   //setPersonState
+   //this.setState  
+   setPersonState
    ({   
 
     persons:[
 
-      {name: newName, age:"37"},
+      {name:"Max", age:"37"},
       {name:"Dash", age:"30"}, 
       {name:"Serg", age:"40"}
 
@@ -44,63 +53,39 @@ state ={  //  state is a JS Object that, its used to manage component internal d
 
 }
 
-nameChangedHandler = (event) =>{
-
-  this.setState({
-
-    persons:[
-
-      {name: "Max", age:"37"},
-      {name: event.target.value, age:"30"}, 
-      {name:"Serg", age:"40"}
-
-  ]
-
-  }
-  )
-}
-
 
 
 // state changes lead to DOM updating / rerendering 
 
-render(){ //if func no render
-
-  //inline styles
-  const style ={
-
-    backgroundColor: 'white',
-    font: 'inherit',
-    border: '1px solid blue',
-    padding: '8px',
-    cursor: 'pointer'
-  }
-
+//render(){ //if func no render
   return (
     <div className="App">
       <header className="App-header">
- 
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+
+        <h1>Hi, im starting programming with React!</h1>
+        
 
         {/* !!  dont add () after function , it will execute function when rendering the DOM 
         if wanting to execute it on click dont put () behind the function- > 
         in that wy we use the reference  */}
-        <button style={style} onClick={ ()=>  this.switchNameHandler("DaryA")}>Switch name</button>  {/* this can be unefficient, if overusing! use bind */}
+        <button onClick={switchNameHandler}>Switch name</button>
 
         {/* replce this.state with personsState in func*/}
         <Person 
-          name ={this.state.persons[0].name} 
-          age = {this.state.persons[0].age}
-          click = {this.switchNameHandler.bind(this, "Darya!")}
+          name ={personsState.persons[0].name} 
+          age = {personsState.persons[0].age}
+          click = {switchNameHandler}
           > My hobby is dancing </Person>
          <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age}
-          changed={this.nameChangedHandler}
-          />
+          name={personsState.persons[1].name} 
+          age={personsState.persons[1].age}/>
          <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age}
-          />
+          name={personsState.persons[2].name} 
+          age={personsState.persons[2].age}/>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -121,11 +106,19 @@ render(){ //if func no render
   //return React.createElement('div',{className:"App"}, React.createElement('h1',null, 'Hi, im starting programming with React!'))
 
 
-}
+//}
 
 export default App;
 
 
+/* state ={  //  state is a JS Object that, its used to manage component internal data
 
+  persons:[
 
+      {name:"Marini", age:"30"},
+      {name:"Dash", age:"31"}, 
+      {name:"Serg", age:"36"}
+
+  ]
+} */
 
