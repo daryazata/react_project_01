@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import Person from './Person/Person'
 
 //function App()
@@ -8,64 +7,51 @@ class App extends Component
 state ={  //  state is a JS Object that, its used to manage component internal data
 
   persons:[
-
       {name:"Marini", age:"30"},
       {name:"Dash", age:"31"}, 
       {name:"Serg", age:"36"}
-
   ]
-
   ,
-  otherState: "some other state"
-
+  otherState: "some other state",
+  showPerson: false
   }
-
-
-
-
   switchNameHandler= (newName)=>  {
-
-    // console.log('Was clicked!')
    // DONT DO THIS this.state.persons[0].name="Marina"
-   
    this.setState  
-   //setPersonState
    ({   
-
     persons:[
-
       {name: newName, age:"37"},
       {name:"Dash", age:"30"}, 
       {name:"Serg", age:"40"}
-
   ]
-
    })
-
 }
 
 nameChangedHandler = (event) =>{
-
   this.setState({
-
     persons:[
-
-      {name: "Max", age:"37"},
+   {name: "Max", age:"37"},
       {name: event.target.value, age:"30"}, 
       {name:"Serg", age:"40"}
-
   ]
-
   }
   )
 }
 
+tooglePersonHandler= () => {
 
+  console.log(this.state.showPerson)
+  const togglePerson =this.state.showPerson
+  this.setState({
+    showPerson: !togglePerson
+
+  })
+
+}
 
 // state changes lead to DOM updating / rerendering 
 
 render(){ //if func no render
-
   //inline styles
   const style ={
 
@@ -76,18 +62,30 @@ render(){ //if func no render
     cursor: 'pointer'
   }
 
+  let persons = null
+
+  if(this.state.showPerson){
+
+   
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
+      
  
-
         {/* !!  dont add () after function , it will execute function when rendering the DOM 
         if wanting to execute it on click dont put () behind the function- > 
         in that wy we use the reference  */}
-        <button style={style} onClick={ ()=>  this.switchNameHandler("DaryA")}>Switch name</button>  {/* this can be unefficient, if overusing! use bind */}
+        {/* <button style={style} onClick={ ()=>  this.switchNameHandler("DaryA")}>Switch name</button>  */} {/* this can be unefficient, if overusing! use bind */}
 
+        <button style={style} onClick={this.tooglePersonHandler}>Switch</button>
         {/* replce this.state with personsState in func*/}
-        <Person 
+
+     {  
+       this.state.showPerson===true?
+       <div>
+       <Person 
           name ={this.state.persons[0].name} 
           age = {this.state.persons[0].age}
           click = {this.switchNameHandler.bind(this, "Darya!")}
@@ -101,15 +99,10 @@ render(){ //if func no render
           name={this.state.persons[2].name} 
           age={this.state.persons[2].age}
           />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+          </div> : null
+       }
+         
+    
     </div>
   );
 
@@ -124,8 +117,4 @@ render(){ //if func no render
 }
 
 export default App;
-
-
-
-
 
