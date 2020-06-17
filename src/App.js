@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Person from './Person/Person'
 import Validation from './assignmentComp/Validation'
 import Char from './assignmentComp/Char'
-
+import './App.css'
+import Radium,{StyleRoot}  from 'radium'
 
 //function App()
 class App extends Component
@@ -113,11 +114,16 @@ render(){ //if func no render
   //inline styles
   const style ={
 
-    backgroundColor: 'white',
+    backgroundColor: 'green',
+    color: "white",
     font: 'inherit',
     border: '1px solid blue',
     padding: '8px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    ':hover': {
+      backgroundColor: 'lightgreen',
+      color: 'black'
+    }
   }
 
   let persons = null
@@ -135,9 +141,18 @@ render(){ //if func no render
         changed={(event)=>{this.nameChangedHandler(event, person.id)}}
         />
       )
+     
+      
     })
 
    )
+
+   style.backgroundColor = "red";
+   // using [] because ':hover' is a String
+   style[':hover'] ={  
+     backgroundColor: 'lightblue',
+     color: 'black'
+   }
   }
 
   let chars = (
@@ -148,10 +163,25 @@ render(){ //if func no render
     )
    })
     )
-  
+
+
+    let classes =[]
+
+    if(this.state.persons.length <= 2){
+      
+      classes.push('red')  // classes = ['red]
+    }
+    if(this.state.persons.length <= 1){
+
+      classes.push('bold') // classes = ['red', 'bold']
+    }
+
   return (
+    <StyleRoot>
     <div className="App">
       
+      <h1>Hi, Im a React App!</h1>
+      <p className={classes.join(' ')}>This is really working</p>
  
         {/* !!  dont add () after function , it will execute function when rendering the DOM 
         if wanting to execute it on click dont put () behind the function- > 
@@ -173,6 +203,7 @@ render(){ //if func no render
     
 
     </div>
+    </StyleRoot>
   );
 
 }
@@ -185,5 +216,5 @@ render(){ //if func no render
 
 }
 
-export default App;
+export default Radium(App); // higher order Component
 

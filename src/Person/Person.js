@@ -1,11 +1,19 @@
 import React from 'react'
 import './Person.css'
+import Radium, {StyleRoot} from 'radium'
 
 //ES6 function convention
 const person = (propss) => {
 
+  const style ={
+    '@media (min-width: 500px)':{
+      width: '450px'
+    }
+
+  }
+
     return (  //() when multiple lines
-        <div className="Person">
+        <div className="Person" style={style}>
           <p onClick={propss.click} > Im {propss.name} and Im {propss.age} years old</p>
           <p>{propss.children}</p> {/* children accesses element between <componenttag> children </componenttag>(text or html element or antoher component ) */}
 
@@ -14,4 +22,4 @@ const person = (propss) => {
     )
 }
 
-export default person
+export default Radium(person)
