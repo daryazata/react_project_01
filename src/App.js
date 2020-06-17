@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Person from './Person/Person'
+import Validation from './assignmentComp/Validation'
+import Char from './assignmentComp/Char'
 
 
 //function App()
@@ -14,7 +16,9 @@ state ={  //  state is a JS Object that, its used to manage component internal d
   ]
   ,
   otherState: "some other state",
-  showPerson: false
+  showPerson: false,
+  outputLength:0,
+  charOutputArr:[]
   }
 
 
@@ -22,7 +26,7 @@ state ={  //  state is a JS Object that, its used to manage component internal d
 
     //const persons = this.state.persons.slice() 
     //create a copy of an array, dont change the original array
-    const persons = [...this.state.persons]  //spread operator => aquivalent to slice() , more modern feature from JS ES6
+    const persons = [...this.state.persons]  //spread operator => aquivalent to this.state.persons.slice() , more modern feature from JS ES6
     persons.splice(personIndex,1)
     this.setState(
       {persons : persons}
@@ -73,6 +77,36 @@ tooglePersonHandler= () => {
   })
 }
 
+lengthOutputHandler = (event) =>{
+
+  console.log(event.target.value.length)
+  let inputLength= event.target.value.length
+  let input = event.target.value
+  let inputArray = event.target.value.split('')
+  console.log(input.split(''))
+  this.setState({
+
+    outputLength:inputLength,
+    charOutputArr: inputArray
+  })
+
+  console.log(this.state.charOutputArr)
+  
+}
+
+deleteCharOutput = (event, id) =>{
+
+  console.log('delete id : ',id)
+  let copy_charOutputArr = [...this.state.charOutputArr]
+  copy_charOutputArr.splice(id,1)
+  console.log(copy_charOutputArr)
+  this.setState({
+
+    charOutputArr:copy_charOutputArr
+  })
+
+}
+
 // state changes lead to DOM updating / rerendering 
 
 render(){ //if func no render
@@ -89,9 +123,7 @@ render(){ //if func no render
   let persons = null
 
   if(this.state.showPerson){
-
    persons = (
-
     this.state.persons.map((person , index)=>{
 
       return(
@@ -108,7 +140,15 @@ render(){ //if func no render
    )
   }
 
+  let chars = (
+   this.state.charOutputArr.map( (char, index)=>{
 
+    return(
+      <Char click={(event)=>{this.deleteCharOutput(event, index)}} key={index} char={char}/> 
+    )
+   })
+    )
+  
   return (
     <div className="App">
       
@@ -123,7 +163,15 @@ render(){ //if func no render
 
      {persons}
          
+        {/* assignment 2 */}
+
+        <input type="text" value={this.state.charOutputArr.join('')}  onChange={(event)=>{this.lengthOutputHandler(event)}} />
+        <p>{this.state.outputLength}</p>
+        <Validation length={this.state.outputLength}/>
+        {chars}
     
+    
+
     </div>
   );
 
