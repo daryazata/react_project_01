@@ -4,10 +4,11 @@
 
 .red{
 
-  color:red;
+  color:rgb(48, 138, 111);
 
 }
 .bold{
 
   font-weight: bold;
+  background-color: rgb(232, 241, 181);
 }

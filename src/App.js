@@ -2,8 +2,24 @@ import React, { Component } from 'react';
 import Person from './Person/Person'
 import Validation from './assignmentComp/Validation'
 import Char from './assignmentComp/Char'
+import styled from 'styled-components'
 import './App.css'
-import Radium,{StyleRoot}  from 'radium'
+
+
+const StyledButton = styled.button`
+
+background-color: orange;
+color: white;
+font: inherit;
+border: 1px solid blue;
+padding: 8px;
+cursor: pointer;
+  &:hover {
+  background-color: lightgreen;
+    color: black;
+  }
+
+`
 
 //function App()
 class App extends Component
@@ -121,7 +137,7 @@ render(){ //if func no render
     padding: '8px',
     cursor: 'pointer',
     ':hover': {
-      backgroundColor: 'lightgreen',
+      backgroundColor: 'green',
       color: 'black'
     }
   }
@@ -147,12 +163,12 @@ render(){ //if func no render
 
    )
 
-   style.backgroundColor = "red";
-   // using [] because ':hover' is a String
-   style[':hover'] ={  
-     backgroundColor: 'lightblue',
-     color: 'black'
-   }
+  //  style.backgroundColor = "blue";
+  //  // using [] because ':hover' is a String
+  //  style[':hover'] ={  
+  //    backgroundColor: 'lightblue',
+  //    color: 'black'
+  //  }
   }
 
   let chars = (
@@ -177,7 +193,7 @@ render(){ //if func no render
     }
 
   return (
-    <StyleRoot>
+
     <div className="App">
       
       <h1>Hi, Im a React App!</h1>
@@ -188,7 +204,7 @@ render(){ //if func no render
         in that wy we use the reference  */}
         {/* <button style={style} onClick={ ()=>  this.switchNameHandler("DaryA")}>Switch name</button>  */} {/* this can be unefficient, if overusing! use bind */}
 
-        <button style={style} onClick={this.tooglePersonHandler}>Toggle Persons</button>
+        <StyledButton onClick={this.tooglePersonHandler}>Toggle Persons</StyledButton>
         {/* replce this.state with personsState in func*/}
 
      {persons}
@@ -203,7 +219,7 @@ render(){ //if func no render
     
 
     </div>
-    </StyleRoot>
+
   );
 
 }
@@ -216,5 +232,6 @@ render(){ //if func no render
 
 }
 
-export default Radium(App); // higher order Component
+//export default Radium(App); // higher order Component - adding Functionality to a component
+export default App; 
 
