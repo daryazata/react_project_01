@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Person from './Person/Person'
-import Validation from './assignmentComp/Validation'
-import Char from './assignmentComp/Char'
+import Person from '../components/Persons/Person/Person'
+import Validation from '../assignment/Validation'
+import Char from '../assignment/Char'
 
 
 //function App()
