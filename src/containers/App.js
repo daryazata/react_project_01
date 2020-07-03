@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Person from '../components/Persons/Person/Person'
 import Validation from '../assignment/Validation'
 import Char from '../assignment/Char'
+import Persons from '../components/Persons/Persons'
+import Cockpit from '../components/Cockpit/Cockpit'
 
 
 //function App()
@@ -111,31 +113,15 @@ deleteCharOutput = (event, id) =>{
 
 render(){ //if func no render
   //inline styles
-  const style ={
-
-    backgroundColor: 'white',
-    font: 'inherit',
-    border: '1px solid blue',
-    padding: '8px',
-    cursor: 'pointer'
-  }
 
   let persons = null
 
   if(this.state.showPerson){
-   persons = (
-    this.state.persons.map((person , index)=>{
-
-      return(
-        <Person 
-        key={person.id} 
-        click={() => {this.deletePersonHandler(index)} } 
-        name={person.name} 
-        age={person.age}
-        changed={(event)=>{this.nameChangedHandler(event, person.id)}}
-        />
-      )
-    })
+   persons = (   
+       <Persons 
+          persons = {this.state.persons} 
+          clicked = {this.deletePersonHandler} 
+          changed = {this.nameChangedHandler}  />
 
    )
   }
@@ -153,16 +139,13 @@ render(){ //if func no render
     <div className="App">
       
  
-        {/* !!  dont add () after function , it will execute function when rendering the DOM 
-        if wanting to execute it on click dont put () behind the function- > 
-        in that wy we use the reference  */}
-        {/* <button style={style} onClick={ ()=>  this.switchNameHandler("DaryA")}>Switch name</button>  */} {/* this can be unefficient, if overusing! use bind */}
-
-        <button style={style} onClick={this.tooglePersonHandler}>Toggle Persons</button>
-        {/* replce this.state with personsState in func*/}
-
-     {persons}
-         
+     
+     <Cockpit
+      showPerson={this.state.showPerson}
+      persons={this.state.persons}
+      tooglePersonHandler={this.tooglePersonHandler}
+      />
+         {persons}
         {/* assignment 2 */}
 
         <input type="text" value={this.state.charOutputArr.join('')}  onChange={(event)=>{this.lengthOutputHandler(event)}} />
